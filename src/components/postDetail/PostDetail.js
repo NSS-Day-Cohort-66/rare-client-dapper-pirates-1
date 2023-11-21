@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { getPostById } from "../../services/postServices";
 import { useParams } from "react-router-dom";
 
-export const PostDetail = () => {
+export const PostDetail = ({ token }) => {
   const [post, setPost] = useState({});
 
   const { postId } = useParams();
 
   const getAndSetPost = async () => {
-    const postObj = await getPostById(postId);
+    const postObj = await getPostById(postId, token);
     setPost(postObj);
   };
 

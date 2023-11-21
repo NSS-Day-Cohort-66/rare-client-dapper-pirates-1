@@ -1,8 +1,8 @@
-export const getPostById = async (postId) => {
+export const getPostById = async (postId, token) => {
   const res = await fetch(`http://localhost:8000/posts/${postId}`, {
     headers: {
       "Content-Type": "application/json",
-      Authorization: "token 37b69ea1095f8c6ad00eed0b06ce46a924fa864a",
+      Authorization: `token ${token}`,
     },
   });
   const postObj = res.json();
