@@ -8,7 +8,7 @@ export const PostDetail = ({ token }) => {
   const { postId } = useParams();
 
   const getAndSetPost = async () => {
-    const postObj = await getPostById(postId, token);
+    const postObj = await getPostById(postId, (token = { token }));
     setPost(postObj);
   };
 
@@ -22,7 +22,7 @@ export const PostDetail = ({ token }) => {
       <img alt="header chosen by author" src={post.image_url} />
       <div>{post.content}</div>
       <div>Published: {post.publication_date}</div>
-      <div>Author: </div>
+      <div>Author: {post.user?.author}</div>
     </>
   );
 };
