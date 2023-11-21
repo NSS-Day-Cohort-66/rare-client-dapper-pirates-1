@@ -22,3 +22,14 @@ export const registerUser = (newUser) => {
     body: JSON.stringify(newUser),
   }).then((res) => res.json());
 };
+
+export const fetchAllPosts = () => {
+  return fetch("http://localhost:8000/posts", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Token ${localStorage.getItem("auth_token")}`,
+    },
+  }).then((res) => res.json());
+};
