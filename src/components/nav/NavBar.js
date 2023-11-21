@@ -54,7 +54,7 @@ export const NavBar = ({ token, setToken }) => {
         <div className="navbar-start">
           {token ? (
             <Link to="/categories" className="navbar-item">
-              Category Manager
+              Category Management
             </Link>
           ) : (
             ""
