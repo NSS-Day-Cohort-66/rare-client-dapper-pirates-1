@@ -1,0 +1,57 @@
+/* home.css */
+
+.kitty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  .cat {
+    text-align:center;
+    max-width: 600px;
+    padding: 20px;
+  }
+  
+  .mb-4 {
+    text-align:center;
+    margin-bottom: 1rem;
+  }
+  
+  .title1 {
+    text-align: center;
+    font-size: 5.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .content {
+    text-align:center;
+  }
+  
+  
+  .Image {
+    display: block;
+    margin: 0 auto;
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px; /* Rounded corners */
+    margin-bottom: 3rem;
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .contentDate {
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+  
+  .title2 {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
