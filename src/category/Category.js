@@ -1,3 +1,11 @@
+import { useState } from "react";
+
 export const Category = () => {
-  return <>Category Page</>;
+  const [posts, setPosts] = useState();
+
+  const getPosts = () => {
+    return fetch("");
+  };
+
+  return <></>;
 };
