@@ -5,7 +5,6 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #ccc; /* Gray background */
   }
   
   .cat {
@@ -28,7 +27,6 @@
   
   .content {
     text-align:center;
-    color: #333; /* Dark text color */
   }
   
   
@@ -48,7 +46,6 @@
   
   .contentDate {
     text-align: center;
-    color: #666;
     margin-top: 0.5rem;
   }
   
