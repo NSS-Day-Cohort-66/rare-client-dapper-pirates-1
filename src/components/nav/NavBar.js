@@ -43,13 +43,23 @@ export const NavBar = ({ token, setToken }) => {
 
       <div className="navbar-menu" ref={navbar}>
         <div className="navbar-start">
-        {token && (
+          {token && (
             <>
-              <Link to="/" className="navbar-item">All Posts</Link>
-              <Link to="/myposts" className="navbar-item">My Posts</Link>
-              <Link to="/category-manager" className="navbar-item">Category Manager</Link>
-              <Link to="/tag-manager" className="navbar-item">Tag Manager</Link>
-              <Link to="/user-manager" className="navbar-item">User Manager</Link>
+              <Link to="/" className="navbar-item">
+                All Posts
+              </Link>
+              <Link to="/myposts" className="navbar-item">
+                My Posts
+              </Link>
+              <Link to="/categories" className="navbar-item">
+                Category Manager
+              </Link>
+              <Link to="/tag-manager" className="navbar-item">
+                Tag Manager
+              </Link>
+              <Link to="/user-manager" className="navbar-item">
+                User Manager
+              </Link>
             </>
           )}
         </div>
