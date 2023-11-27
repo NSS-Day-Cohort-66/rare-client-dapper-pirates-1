@@ -33,8 +33,11 @@ export const Category = ({ token }) => {
 
     addNewCategory(newCategoryItem)
       .then(() => {
-        getAllCategories({ token }).then((categoryObj) => {
-          setCategories(categoryObj);
+        getAllCategories({ token }).then((catArray) => {
+          const alphaCatArray = catArray.sort((a, b) =>
+            a.label.localeCompare(b.label)
+          );
+          setCategories(alphaCatArray);
         });
       })
       .then(() => {
@@ -78,7 +81,7 @@ export const Category = ({ token }) => {
           );
         })}
       </div>
-      <div className="fixed top-1/3 right-0 p-6 border-2 border-black rounded-lg transform -translate-y-1/3">
+      <div className="fixed top-1/3 right-12 p-6 border-2 border-black rounded-lg transform -translate-y-1/3">
         <h1 className="text-xl font-bold text-center mb-4">
           Create a new category
         </h1>
