@@ -1,8 +1,51 @@
 import { useEffect, useState } from "react";
 import { getAllCategories } from "../services/categoryServices";
+import { addNewCategory } from "../services/addNewCategory";
 
 export const Category = ({ token }) => {
   const [categories, setCategories] = useState([]);
+  const [newCategory, setNewCategory] = useState({
+    label: "",
+  });
+
+  const handleNewCategoryInput = (e) => {
+    const categoryCopy = { ...newCategory };
+    categoryCopy[e.target.name] = e.target.value;
+    setNewCategory(categoryCopy);
+  };
+
+  const handleSaveNewCategory = (e) => {
+    e.preventDefault();
+
+    const isDuplicate = categories.some(
+      (category) => category.label === newCategory.label
+    );
+    if (isDuplicate) {
+      alert(
+        "Category with this label already exists. Please enter a different label."
+      );
+      return;
+    }
+
+    const newCategoryItem = {
+      label: newCategory.label,
+    };
+
+    addNewCategory(newCategoryItem)
+      .then(() => {
+        getAllCategories({ token }).then((catArray) => {
+          const alphaCatArray = catArray.sort((a, b) =>
+            a.label.localeCompare(b.label)
+          );
+          setCategories(alphaCatArray);
+        });
+      })
+      .then(() => {
+        setNewCategory({
+          label: "",
+        });
+      });
+  };
 
   useEffect(() => {
     getAllCategories({ token }).then((catArray) => {
@@ -37,6 +80,30 @@ export const Category = ({ token }) => {
             </div>
           );
         })}
+      </div>
+      <div className="fixed top-1/3 right-12 p-6 border-2 border-black rounded-lg transform -translate-y-1/3">
+        <h1 className="text-xl font-bold text-center mb-4">
+          Create a new category
+        </h1>
+        <form>
+          <label>
+            <input
+              value={newCategory.label}
+              type="text"
+              name="label"
+              placeholder="Add text"
+              className="mt-2 border-2 border-black rounded-md p-3 block w-full"
+              onChange={handleNewCategoryInput}
+            />
+          </label>
+
+          <button
+            onClick={handleSaveNewCategory}
+            className="btn mt-4 bg-green-200 border-2 border-green-300 rounded-md p-3 block w-full font-semibold"
+          >
+            <span className="font-bold">Create</span>
+          </button>
+        </form>
       </div>
     </div>
   );
