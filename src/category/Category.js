@@ -17,15 +17,31 @@ export const Category = ({ token }) => {
   const handleSaveNewCategory = (e) => {
     e.preventDefault();
 
+    const isDuplicate = categories.some(
+      (category) => category.label === newCategory.label
+    );
+    if (isDuplicate) {
+      alert(
+        "Category with this label already exists. Please enter a different label."
+      );
+      return;
+    }
+
     const newCategoryItem = {
       label: newCategory.label,
     };
 
-    addNewCategory(newCategoryItem).then(() => {
-      setNewCategory({
-        label: "",
+    addNewCategory(newCategoryItem)
+      .then(() => {
+        getAllCategories({ token }).then((categoryObj) => {
+          setCategories(categoryObj);
+        });
+      })
+      .then(() => {
+        setNewCategory({
+          label: "",
+        });
       });
-    });
   };
 
   useEffect(() => {
