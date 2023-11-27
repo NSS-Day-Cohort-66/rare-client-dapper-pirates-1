@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getPostById } from "../../services/postServices";
 import { useParams } from "react-router-dom";
+import "./PostDetail.css";
 
 export const PostDetail = ({ token }) => {
   const [post, setPost] = useState({});
@@ -18,11 +19,15 @@ export const PostDetail = ({ token }) => {
 
   return (
     <>
-      <h1>{post.title}</h1>
-      <img alt="header chosen by author" src={post.image_url} />
-      <div>{post.content}</div>
-      <div>Published: {post.publication_date}</div>
-      <div>Author: {post.user?.author}</div>
+      <h2 className="title1">{post.title}</h2>
+      <img
+        className="Image"
+        alt="header chosen by author"
+        src={post.image_url}
+      />
+      <div className="content">{post.content}</div>
+      <div className="contentDate">Published: {post.publication_date}</div>
+      <div className="contentDate">Author: {post.user?.author}</div>
     </>
   );
 };
