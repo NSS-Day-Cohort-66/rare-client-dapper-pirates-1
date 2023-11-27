@@ -1,0 +1,24 @@
+.title1 {
+  text-align: center;
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.content {
+  text-align: center;
+}
+
+.Image {
+  display: block;
+  margin: 0 auto;
+  max-width: 300px;
+  height: auto;
+  border-radius: 8px; /* Rounded corners */
+  margin-bottom: 3rem;
+}
+
+.contentDate {
+  text-align: center;
+  margin-top: 0.5rem;
+}
