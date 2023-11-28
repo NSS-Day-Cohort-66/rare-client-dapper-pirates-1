@@ -28,6 +28,9 @@ export const PostDetail = ({ token }) => {
       <div className="content">{post.content}</div>
       <div className="contentDate">Published: {post.publication_date}</div>
       <div className="contentDate">Author: {post.user?.author}</div>
+      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Add Comment
+      </button>
     </>
   );
 };
