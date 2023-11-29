@@ -7,6 +7,7 @@ import { Home } from "./Home";
 import { PostDetail } from "../components/postDetail/PostDetail";
 import { AddComment } from "../components/addComment/AddComment";
 import { Comments } from "../components/comments/Comments";
+import { PostsByCategory } from "../category/PostsByCategory";
 
 export const ApplicationViews = ({ token, setToken }) => {
   return (
@@ -17,10 +18,13 @@ export const ApplicationViews = ({ token, setToken }) => {
         <Route element={<Authorized token={token} />}>
           <Route path="/" element={<Home />} />
           {/* Add Routes here */}
-          <Route
-            path="/category-manager"
-            element={<Category token={token} />}
-          />
+          <Route path="category-manager">
+            <Route index element={<Category token={token} />} />
+            <Route
+              path=":categoryId"
+              element={<PostsByCategory token={token} />}
+            />
+          </Route>
           <Route path="posts">
             <Route path=":postId">
               <Route path="" element={<PostDetail token={token} />} />
