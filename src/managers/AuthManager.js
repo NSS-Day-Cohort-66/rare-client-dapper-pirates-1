@@ -33,15 +33,29 @@ export const fetchAllPosts = () => {
     },
   }).then((res) => res.json());
 };
-export const CreateAPost = (postData) => {
-  return fetch("http://localhost:8000/posts", {
+export const CreateAPost = async (postData) => {
+  const response = await fetch('http://localhost:8000/posts', {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${localStorage.getItem("auth_token")}`,
+    },
+    body: JSON.stringify(postData),
+  })
+  if (!response.ok) {
+    throw new Error(`Post creation failed: ${response.statusText}`);
+  }
+
+  return response.json();
+};
+
+export const getCategories = () => {
+  return fetch("http://localhost:8000/categories", {
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
       Authorization: `Token ${localStorage.getItem("auth_token")}`,
     },
-    body: JSON.stringify(postData),
   }).then((res) => res.json());
 };
-
