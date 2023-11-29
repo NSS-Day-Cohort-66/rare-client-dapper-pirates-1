@@ -22,3 +22,9 @@
   text-align: center;
   margin-top: 0.5rem;
 }
+
+.bg-blue-500 {
+  display: block;
+  margin: 0 auto;
+  margin-top: 1.5rem;
+}

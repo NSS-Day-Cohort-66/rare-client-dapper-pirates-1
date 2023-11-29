@@ -5,6 +5,8 @@ import { Authorized } from "./Authorized";
 import { Category } from "../category/Category";
 import { Home } from "./Home";
 import { PostDetail } from "../components/postDetail/PostDetail";
+import { AddComment } from "../components/addComment/AddComment";
+import { Comments } from "../components/comments/Comments";
 import { PostsByCategory } from "../category/PostsByCategory";
 
 export const ApplicationViews = ({ token, setToken }) => {
@@ -24,7 +26,11 @@ export const ApplicationViews = ({ token, setToken }) => {
             />
           </Route>
           <Route path="posts">
-            <Route path=":postId" element={<PostDetail token={token} />} />
+            <Route path=":postId">
+              <Route path="" element={<PostDetail token={token} />} />
+              <Route path="AddComment" element={<AddComment token={token} />} />
+              <Route path="comments" element={<Comments token={token} />} />
+            </Route>
           </Route>
         </Route>
       </Routes>
