@@ -1,12 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getAllCategories } from "../services/categoryServices";
 import { addNewCategory } from "../services/addNewCategory";
 
 export const Category = ({ token }) => {
+  const [editSingleCategory, setEditSingleCategory] = useState({});
+  //the above useState({}) handles the edit category Modal/state
   const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState({
     label: "",
   });
+  const editModal = useRef();
+
+  useEffect(() => {
+    getAllCategories({ token }).then((catArray) => {
+      const alphaCatArray = catArray.sort((a, b) =>
+        a.label.localeCompare(b.label)
+      );
+      setCategories(alphaCatArray);
+    });
+  }, [token, editSingleCategory]);
 
   const handleNewCategoryInput = (e) => {
     const categoryCopy = { ...newCategory };
@@ -47,28 +59,100 @@ export const Category = ({ token }) => {
       });
   };
 
-  useEffect(() => {
-    getAllCategories({ token }).then((catArray) => {
-      const alphaCatArray = catArray.sort((a, b) =>
-        a.label.localeCompare(b.label)
-      );
-      setCategories(alphaCatArray);
+  //The following function (editCategory) handles editing the category inside a modal
+  const editCategory = async (event, id) => {
+    event.preventDefault();
+    const finalValue = {
+      label: editSingleCategory.label,
+    };
+
+    await fetch(`http://localhost:8000/categories/${id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Token ${localStorage.getItem("auth_token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(finalValue),
     });
-  }, [token]);
+
+    const updatedCategory = await getAllCategories({ token });
+    setCategories(updatedCategory);
+    editModal.current.close();
+    setEditSingleCategory({ label: "" });
+  };
 
   return (
     <div>
       <h1 className="category_header text-4xl font-bold mt-10 ml-4">
         Categories
       </h1>
+      {/* Edit Modal Designated Below*/}
+      <dialog
+        className="bg-white p-6 border-2 border-black rounded-lg fixed top-1/3 right-12 transform -translate-y-1/3"
+        ref={editModal}
+      >
+        <button
+          className="text-xl absolute top-2 right-2 cursor-pointer hover:text-red-500"
+          onClick={() => editModal.current.close()}
+          //This handles the X button (close button)
+        >
+          X
+        </button>
+        <h1 className="text-xl font-bold text-center mb-4">
+          Edit this category
+        </h1>
+        <form
+          className="flex flex-col gap-4 items-center"
+          onSubmit={(event) => {
+            event.preventDefault();
+            // This prevents issues with the form when hitting cancel
+          }}
+        >
+          <label>
+            <input
+              className="mt-2 border-2 border-black rounded-md p-3 block w-full"
+              value={editSingleCategory.label || ""}
+              onChange={(event) => {
+                const copy = { ...editSingleCategory };
+                copy.label = event.target.value;
+                setEditSingleCategory(copy);
+                //handles the INPUT field of the edited item. The reason you see a || "" (or empty string) is to handle the value never being undefined
+              }}
+            />
+          </label>
+
+          <div className="w-full">
+            <button
+              className="btn mt-4 bg-green-200 border-2 border-green-300 rounded-md p-3 w-full font-semibold hover:bg-green-300"
+              onClick={(event) => {
+                editCategory(event, editSingleCategory.id);
+              }}
+              //handles the Ok button after editing
+            >
+              Ok
+            </button>
+            <button
+              className="btn bg-red-200 border-2 border-red-300 rounded-md p-3 w-full mt-2 font-semibold hover:bg-red-300"
+              onClick={() => editModal.current.close()}
+              //handles the cancel button
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </dialog>
       <div className="category_list mt-10">
         {categories.map((catObj) => {
           return (
-            <div
-              key={`category ${catObj.id}`}
-              className="category_list_container flex ml-6 "
-            >
-              <button className="edit_btn basis-7">
+            <div key={catObj.id} className="category_list_container flex ml-6 ">
+              <button
+                onClick={() => {
+                  setEditSingleCategory(catObj);
+                  editModal.current.showModal();
+                  //handles when you click the edit button/gear symbol. It then "activates" all the JSX code above.
+                }}
+                className="edit_btn basis-7"
+              >
                 <i className="fa-solid fa-gear"></i>
               </button>
               <button className="delete_btn basis-7">
