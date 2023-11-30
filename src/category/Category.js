@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { getAllCategories } from "../services/categoryServices";
 import { addNewCategory } from "../services/addNewCategory";
+import { Link } from "react-router-dom";
 
 export const Category = ({ token }) => {
   const [editSingleCategory, setEditSingleCategory] = useState({});
@@ -158,9 +159,11 @@ export const Category = ({ token }) => {
               <button className="delete_btn basis-7">
                 <i className="fa-solid fa-trash-can"></i>
               </button>
-              <div className="category-label border-4 border-emerald-300 rounded ml-10 mr-10 mt-2 mb-2 pl-10 pr-10 pt-2 pb-2">
-                {catObj.label}
-              </div>
+              <Link to={`/category-manager/${catObj.id}`}>
+                <div className="category-label border-4 border-emerald-300 rounded ml-10 mr-10 mt-2 mb-2 pl-10 pr-10 pt-2 pb-2">
+                  {catObj.label}
+                </div>
+              </Link>
             </div>
           );
         })}
