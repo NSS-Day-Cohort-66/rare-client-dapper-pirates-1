@@ -45,13 +45,11 @@ export const CreatePost = ({ token }) => {
     }
 
     // Add logic for setting the current date and time, and other required fields
-    const currentDate = new Date().toISOString();
 
     try {
       const response = await CreateAPost({
         ...formData,
         category: parseInt(selectedCategory.id),
-        publication_date: currentDate,
         approved: true,
       });
 
