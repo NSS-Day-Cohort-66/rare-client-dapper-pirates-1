@@ -9,3 +9,7 @@
 
 
 <!-- TODO: Finish writing the readme -->
+- This application is designed with the user in mind. It provides functionality much like a blog or social media platform (instagram, facebook) etc.
+- To test this code you must have the database served firstly.
+- Go to this hyperlink if you wish to look at the API code and serve for testing (its on github): https://github.com/NSS-Day-Cohort-66/rare-api-dapper-pirates
+   ##To Test##
