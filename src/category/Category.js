@@ -7,6 +7,10 @@ export const Category = ({ token }) => {
   const [editSingleCategory, setEditSingleCategory] = useState({});
   //the above useState({}) handles the edit category Modal/state
   const [categories, setCategories] = useState([]);
+  //below handles visibility of delete modal 
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  //below keeps track of which modal to delete
+  const [categoryToDelete, setCategoryToDelete] = useState(null);
   const [newCategory, setNewCategory] = useState({
     label: "",
   });
@@ -81,7 +85,24 @@ export const Category = ({ token }) => {
     editModal.current.close();
     setEditSingleCategory({ label: "" });
   };
-
+  //Delete Toggle confirmation Modal
+  const toggleConfirmationModal = (category) => {
+    setCategoryToDelete(category);
+    setShowConfirmationModal(!showConfirmationModal);
+  };
+  const handleDeleteCategory = async (id) => {
+    await fetch(`http://localhost:8000/categories/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Token ${localStorage.getItem("auth_token")}`,
+        "Content-Type": "application/json",
+      },
+    });
+  
+    const updatedCategories = await getAllCategories({ token });
+    setCategories(updatedCategories);
+    setShowConfirmationModal(false);
+  };
   return (
     <div>
       <h1 className="category_header text-4xl font-bold mt-10 ml-4">
@@ -156,7 +177,10 @@ export const Category = ({ token }) => {
               >
                 <i className="fa-solid fa-gear"></i>
               </button>
-              <button className="delete_btn basis-7">
+              <button
+                className="delete_btn basis-7"
+                onClick={() => toggleConfirmationModal(catObj)}
+              >
                 <i className="fa-solid fa-trash-can"></i>
               </button>
               <Link to={`/category-manager/${catObj.id}`}>
@@ -168,6 +192,30 @@ export const Category = ({ token }) => {
           );
         })}
       </div>
+      {/* Delete Confirmation Modal */}
+        <dialog
+          className="bg-white p-6 border-2 border-black rounded-lg fixed top-1/3 right-12 transform -translate-y-1/3"
+          open={showConfirmationModal}
+        >
+        <h1 className="text-xl font-bold text-center mb-4">
+          Delete this category?
+        </h1>
+          <button
+            className="btn mt-4 bg-red-200 border-2 border-red-500 rounded-md hover:text-red-500 p-3 block w-full font-semibold"
+            onClick={() => handleDeleteCategory(categoryToDelete.id)}
+          >
+            Delete
+          </button>
+          <button
+            className="btn btn-green text-black-500  hover:text-green-500"
+            onClick={() => toggleConfirmationModal(null)}
+          >
+            Cancel
+          </button>
+        </dialog>
+
+        {/* ... (end Delete confirmation Modal) */}
+
       <div className="fixed top-1/3 right-12 p-6 border-2 border-black rounded-lg transform -translate-y-1/3">
         <h1 className="text-xl font-bold text-center mb-4">
           Create a new category
